@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://vtv6i58d0tf3"]
+
+[ext_resource type="Script" uid="uid://cv8an471yq5rf" path="res://flappy_player.gd" id="1_4er6v"]
+[ext_resource type="Texture2D" uid="uid://c13y1xkxhg15y" path="res://sprites/bluebird-upflap.png" id="1_4wtkq"]
+[ext_resource type="Texture2D" uid="uid://cihiwndhcda0j" path="res://sprites/bluebird-midflap.png" id="2_4er6v"]
+[ext_resource type="Texture2D" uid="uid://b71angq7cprdb" path="res://sprites/bluebird-downflap.png" id="3_kc4pb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wuf86"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4wtkq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_4er6v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_kc4pb")
+}],
+"loop": true,
+"name": &"flappying",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4wtkq"]
+radius = 11.0
+height = 26.0
+
+[node name="flappyPlayer" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_4er6v")
+jumpSpeed = 400
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_wuf86")
+animation = &"flappying"
+autoplay = "flappying"
+frame_progress = 0.26998577
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_4wtkq")

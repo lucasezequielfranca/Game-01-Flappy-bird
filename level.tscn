@@ -1,3 +1,75 @@
-[gd_scene format=3 uid="uid://c2q2awib2rhum"]
+[gd_scene load_steps=8 format=3 uid="uid://c2q2awib2rhum"]
 
-[node name="Level" type="Node2D"]
+[ext_resource type="Script" uid="uid://bri114uuoaw5r" path="res://level.gd" id="1_f2txt"]
+[ext_resource type="Texture2D" uid="uid://ba0upbh0jtoe8" path="res://sprites/background-day.png" id="1_u52ul"]
+[ext_resource type="Texture2D" uid="uid://dd7otnvdur86d" path="res://sprites/base.png" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://d1bwmo1lec1ss" path="res://pipe.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://vtv6i58d0tf3" path="res://flappy_player.tscn" id="4_0b4ue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oi3di"]
+size = Vector2(1186, 116)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ainy"]
+size = Vector2(47, 728)
+
+[node name="level" type="Node2D"]
+script = ExtResource("1_f2txt")
+
+[node name="background" type="Sprite2D" parent="."]
+light_mask = 512
+texture_repeat = 2
+position = Vector2(-5, -5)
+scale = Vector2(1.0104439, 1.1778657)
+texture = ExtResource("1_u52ul")
+centered = false
+region_enabled = true
+region_rect = Rect2(0.047088623, 0, 1149.9529, 506.43488)
+
+[node name="floor" type="StaticBody2D" parent="."]
+z_index = 3
+position = Vector2(4, 21)
+collision_layer = 2
+
+[node name="textureFloor" type="Sprite2D" parent="floor"]
+texture_repeat = 2
+position = Vector2(-12, 560.685)
+scale = Vector2(0.9956522, 1)
+texture = ExtResource("2_vonw3")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 6.88, 1200, 104.683)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(581, 624)
+shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="floor"]
+position = Vector2(570, -83)
+shape = SubResource("RectangleShape2D_oi3di")
+
+[node name="pipe1" parent="." instance=ExtResource("3_oi3di")]
+position = Vector2(1232, 336)
+
+[node name="pipe2" parent="." instance=ExtResource("3_oi3di")]
+position = Vector2(1498, 333)
+
+[node name="pipe3" parent="." instance=ExtResource("3_oi3di")]
+position = Vector2(1830, 335)
+
+[node name="pipe4" parent="." instance=ExtResource("3_oi3di")]
+position = Vector2(2133, 331)
+
+[node name="flappyPlayer" parent="." instance=ExtResource("4_0b4ue")]
+position = Vector2(480, 196)
+
+[node name="startPointPipe" type="Node2D" parent="."]
+position = Vector2(1231, 337)
+
+[node name="resetArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="resetArea"]
+position = Vector2(-85, 335)
+shape = SubResource("RectangleShape2D_1ainy")
+
+[connection signal="body_entered" from="resetArea" to="." method="_on_reset_area_body_entered"]
